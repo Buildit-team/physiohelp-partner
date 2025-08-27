@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, type Key } from 'react';
 import { ChevronUp, ChevronDown, Pencil, Trash2, Eye, Search, Calendar, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { format, isWithinInterval, parseISO } from 'date-fns';
-import { DataItemT, TablePropsT, DateRange, ButtonPropsT, ImageWithTextConfig } from '../interface/addProduct';
-import { Key } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { DataItemT, ImageWithTextConfig, TablePropsT, DateRange, ButtonPropsT } from '../interface/addProduct';
 
 
 

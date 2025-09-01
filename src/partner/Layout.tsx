@@ -8,7 +8,7 @@ const PartnerLayout = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
-            <div className="hidden md:flex md:w-[20%] md:flex-col">
+            <div className="hidden md:flex md:w-[20%] md:flex-col sticky top-0 h-screen">
                 <div className="flex flex-col flex-grow">
                     <PartnerSidebar onClose={() => setSidebarOpen(false)} />
                 </div>
@@ -41,7 +41,7 @@ const PartnerLayout = () => {
                 </nav>
 
                 <main className="flex-1 py-6">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
                         <Outlet />
                     </div>
                 </main>

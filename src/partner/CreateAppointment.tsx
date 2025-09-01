@@ -121,10 +121,10 @@ const PartnerCreateAppointment = () => {
                     <div className="bg-blue-600 px-6 py-4 text-white">
                         <h1 className="text-2xl font-semibold flex items-center">
                             <Activity className="mr-2 h-6 w-6" />
-                            Create Appointment for Your Client
+                            Create Appointment for Your Patients to Physiohelp
                         </h1>
                         <p className="mt-1 text-blue-100">
-                            Create an appointment for clients who cannot book online. They will receive a confirmation email.
+                            Create an appointment for patients who cannot book online. They will receive a confirmation email.
                         </p>
                     </div>
 
@@ -213,7 +213,7 @@ const PartnerCreateAppointment = () => {
                                 </label>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                     {allService.map((service) => (
-                                        <label key={service.type_id} className="flex items-center p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer">
+                                        <label key={service?.type_id} className="flex items-center p-3 border border-gray-200 rounded-md hover:bg-gray-50 cursor-pointer">
                                             <input
                                                 type="radio"
                                                 name="service_needed"
@@ -323,9 +323,9 @@ const PartnerCreateAppointment = () => {
                                 <div className="text-sm">
                                     <h4 className="font-medium text-blue-800 mb-1">Important Information</h4>
                                     <ul className="text-blue-700 space-y-1">
-                                        <li>• The client will receive a confirmation email with appointment details</li>
-                                        <li>• They can click the link in the email to view and pay for their appointment</li>
-                                        <li>• The payment process is the same as online bookings</li>
+                                        <li>• Physiohelp will receive all the appointments you create here </li>
+                                        <li>• Always check the time of each to avoid collision</li>
+                                        <li>• The payment will be done and accumulated at the end of the month</li>
                                         <li>• You can track the appointment status in the Appointments section</li>
                                     </ul>
                                 </div>

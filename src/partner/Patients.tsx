@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Table } from '../components/Table';
 
 interface Patient {
     id: string;
@@ -45,6 +46,41 @@ const PartnerPatients = () => {
         patient.phone.includes(searchTerm)
     );
 
+    const columns = [
+        {
+            header: 'Name',
+            key: 'name',
+        },
+        {
+            header: 'Contact',
+            key: 'contact',
+            render: (patient: Patient) => (
+                <div>
+                    <div>{patient.email}</div>
+                    <div>{patient.phone}</div>
+                </div>
+            ),
+        },
+        {
+            header: 'Last Visit',
+            key: 'lastVisit',
+        },
+        {
+            header: 'Next Appointment',
+            key: 'nextAppointment',
+        },
+        {
+            header: 'Status',
+            key: 'status',
+            render: (patient: Patient) => (
+                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${patient.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
+                    {patient.status}
+                </span>
+            ),
+        },
+    ];
+
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
@@ -64,79 +100,12 @@ const PartnerPatients = () => {
                     />
                 </div>
             </div>
-            <div className="mt-8 flex flex-col">
-                <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Name
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Contact
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Last Visit
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Next Appointment
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Status
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200 bg-white">
-                                    {loading ? (
-                                        <tr>
-                                            <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
-                                                Loading patients...
-                                            </td>
-                                        </tr>
-                                    ) : filteredPatients.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
-                                                No patients found
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        filteredPatients.map((patient) => (
-                                            <tr key={patient.id}>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                                                    {patient.name}
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    <div>{patient.email}</div>
-                                                    <div>{patient.phone}</div>
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {new Date(patient.lastVisit).toLocaleDateString()}
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                    {patient.nextAppointment
-                                                        ? new Date(patient.nextAppointment).toLocaleDateString()
-                                                        : 'No upcoming appointments'
-                                                    }
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${patient.status === 'active'
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : 'bg-gray-100 text-gray-800'
-                                                        }`}>
-                                                        {patient.status}
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Table
+                data={filteredPatients}
+                columns={columns}
+                loading={loading}
+                emptyMessage="No patients found"
+            />
         </div>
     );
 };

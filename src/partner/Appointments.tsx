@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Table } from '../components/Table';
 
 interface Appointment {
     id: string;
@@ -21,7 +22,6 @@ const PartnerAppointments = () => {
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
-                // Replace with your actual API call
                 const response = await fetch(`/api/partner/appointments?date=${selectedDate}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('partner_token')}`
@@ -79,8 +79,62 @@ const PartnerAppointments = () => {
         }
     };
 
+    const columns = [
+        {
+            header: 'Time',
+            key: 'time'
+        },
+        {
+            header: 'Patient',
+            key: 'patient',
+            render: (appointment: Appointment) => (
+                <div>
+                    <div>{appointment.patientName}</div>
+                    <div className="text-gray-500">{appointment.patientEmail}</div>
+                </div>
+            )
+        },
+        {
+            header: 'Type',
+            key: 'type'
+        },
+        {
+            header: 'Status',
+            key: 'status',
+            render: (appointment: Appointment) => (
+                <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getStatusColor(appointment.status)}`}>
+                    {appointment.status}
+                </span>
+            )
+        },
+        {
+            header: 'Actions',
+            key: 'actions',
+            render: (appointment: Appointment) => (
+                <div className="flex space-x-2">
+                    {appointment.status === 'scheduled' && (
+                        <>
+                            <button
+                                onClick={() => handleStatusChange(appointment.id, 'completed')}
+                                className="text-green-600 hover:text-green-900"
+                            >
+                                Complete
+                            </button>
+                            <button
+                                onClick={() => handleStatusChange(appointment.id, 'cancelled')}
+                                className="text-red-600 hover:text-red-900"
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    )}
+                </div>
+            )
+        }
+    ];
+
     return (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-4 lg:px-8">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="text-2xl font-semibold text-gray-900">Appointments</h1>
@@ -97,81 +151,12 @@ const PartnerAppointments = () => {
                     />
                 </div>
             </div>
-            <div className="mt-8 flex flex-col">
-                <div className="-mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="inline-block min-w-full py-2 align-middle">
-                        <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-                            <table className="min-w-full divide-y divide-gray-300">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Time
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Patient
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Type
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Status
-                                        </th>
-                                        <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200 bg-white">
-                                    {loading ? (
-                                        <tr>
-                                            <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
-                                                Loading appointments...
-                                            </td>
-                                        </tr>
-                                    ) : appointments.length === 0 ? (
-                                        <tr>
-                                            <td colSpan={5} className="px-3 py-4 text-sm text-gray-500 text-center">
-                                                No appointments for this date
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        appointments.map((appointment) => (
-                                            <tr key={appointment.id}>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                                                    {appointment.time}
-                                                </td>
-                                                <td className="px-3 py-4 text-sm text-gray-900">
-                                                    <div>{appointment.patientName}</div>
-                                                    <div className="text-gray-500">{appointment.patientEmail}</div>
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                                                    {appointment.type}
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getStatusColor(appointment.status)}`}>
-                                                        {appointment.status}
-                                                    </span>
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                                                    <select
-                                                        value={appointment.status}
-                                                        onChange={(e) => handleStatusChange(appointment.id, e.target.value as Appointment['status'])}
-                                                        className="rounded-md border-gray-300 text-sm focus:border-blue-500 focus:ring-blue-500"
-                                                    >
-                                                        <option value="scheduled">Scheduled</option>
-                                                        <option value="completed">Completed</option>
-                                                        <option value="cancelled">Cancelled</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Table
+                data={appointments}
+                columns={columns}
+                loading={loading}
+                emptyMessage="No appointments found for this date"
+            />
         </div>
     );
 };

@@ -1,15 +1,42 @@
 import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { loginPartner } from './services/api-service';
+import { useNavigate } from 'react-router-dom';
 
 const PartnerLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+const navigate = useNavigate()
+    const { mutate } = useMutation(
+        (variables: { email: string; password: string }) => loginPartner(variables.email, variables.password)
+    );
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setLoading(true);
+
+        mutate(
+            { email, password },
+            {
+                onSuccess: (data) => {
+                    setLoading(false);
+                    localStorage.setItem('partner_token', data.token);
+                    localStorage.setItem('partner_id', data.partner.id);
+                    navigate('/partners')
+                },
+                onError: (error: unknown) => {
+                    setLoading(false);
+                    const errorMessage =
+                        typeof error === 'object' && error !== null && 'message' in error
+                            ? (error as { message?: string }).message
+                            : 'Login failed';
+                    setError(errorMessage || 'Login failed');
+                },
+            }
+        );
     };
 
     return (
@@ -21,7 +48,7 @@ const PartnerLogin = () => {
                     </h2>
                 </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm">
+                    <div className="rounded-md flex flex-col gap-4">
                         <div>
                             <label htmlFor="email-address" className="sr-only">
                                 Email address

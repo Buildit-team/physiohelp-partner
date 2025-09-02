@@ -2,7 +2,6 @@ import axios from 'axios';
 import type { AppointmentFormData } from '../../interface/session';
 const VITE_ENDPOINT = import.meta.env.VITE_ENDPOINT;
 
-const token = await localStorage.getItem('partner_token')
 
 export const getAllSessionType = async () => {
     const response = await axios.get(`${VITE_ENDPOINT}/session-types`);
@@ -14,6 +13,7 @@ export const bookAppointment = async (appointmentData: AppointmentFormData) => {
     return response.data;
 }
 export const getAppointments = async (page: string, limit: string) => {
+    const token = localStorage.getItem('partner_token')
     const response = await axios.get(`${VITE_ENDPOINT}/partners/appointments`, {
         headers: {
             Authorization:  `Bearer ${token}`
@@ -30,6 +30,7 @@ export const getPatients = async (partnerId: string) => {
     return response.data;
 }
 export const getPatientDetails = async (patientId: string) => {
+    const token = localStorage.getItem('partner_token')
     const response = await axios.get(`${VITE_ENDPOINT}/patients/${patientId}`, {
         headers: {
             Authorization: `Bearer ${token}`
@@ -42,6 +43,7 @@ export const loginPartner = async (email: string, password: string) => {
     return response.data;
 }
 export const getPartnerDetails = async () => {
+    const token = localStorage.getItem('partner_token')
     const response = await axios.get(`${VITE_ENDPOINT}/partners`, {
         headers: {
             Authorization: `Bearer ${token}`

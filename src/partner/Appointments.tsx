@@ -1,45 +1,19 @@
-import { useState } from 'react';
-import { getAppointments } from './services/api-service';
-import { useQuery } from 'react-query';
 import Table from '../utils/Table';
 import type { ColumnT } from '../interface/addProduct';
-
-interface Price {
-    client_amount: string;
-    build_it_amount: string;
-}
-
-interface Appointment {
-    session_id: string;
-    full_name: string;
-    email: string;
-    phone_number: string;
-    address: string;
-    service_needed: string;
-    where_it_hurts: string;
-    session_status: string;
-    limitaions: string;
-    pain_durations: string;
-    amount: string;
-    price: Price;
-    appointment_time: string;
-    appointment_date: string;
-    created_at: string;
-    updated_at: string;
-}
+import { useAppointment } from './hooks/useAppointment';
+import type { Appointment } from '../interface/appointment';
 
 const PartnerAppointments = () => {
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
-    const [selectedDate, setSelectedDate] = useState<string>(
-        new Date().toISOString().split('T')[0]
-    );
-    const [page, setPage] = useState(1)
-    const limit = 10
-    const { isLoading: loading } = useQuery(['appointments', selectedDate], () => getAppointments(page.toString(), limit.toString()), {
-        onSuccess: (data) => {
-            setAppointments(data.data.appointments)
-        }
-    });
+    const {
+        appointments,
+        selectedDate,
+        setSelectedDate,
+        page,
+        setPage,
+        limit,
+        loading,
+        // totalAppointments 
+    } = useAppointment();
 
     const Columns: ColumnT<Appointment>[] = [
         {
@@ -88,7 +62,7 @@ const PartnerAppointments = () => {
     };
 
     return (
-        <div className="px-4 sm:px-4 lg:px-8">
+        <div className="pt-4">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
                     <h1 className="text-2xl font-semibold text-gray-900">Appointments</h1>

@@ -1,5 +1,5 @@
 import { RxDashboard } from "react-icons/rx";
-import { Calendar,  LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 
@@ -36,7 +36,7 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
                         <RxDashboard />
                         <p>Dashboard</p>
                     </span>
-                    <span
+                    {/* <span
                         className="w-[80%] h-[60px] cursor-pointer flex gap-[10px] items-center text-white hover:bg-white/10 rounded-lg px-4"
                         onClick={() => {
                             navigate("/partners/appointments")
@@ -45,7 +45,7 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
                     >
                         <Calendar size={16} />
                         <p>Appointments</p>
-                    </span>
+                    </span> */}
                     {/* <span
                         className="w-[80%] h-[60px] cursor-pointer flex gap-[10px] items-center text-white hover:bg-white/10 rounded-lg px-4"
                         onClick={() => {

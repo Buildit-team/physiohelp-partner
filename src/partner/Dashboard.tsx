@@ -1,10 +1,15 @@
 import { useQuery } from "react-query";
 import { getPartnerDetails } from "./services/api-service";
+import PartnerAppointments from "./Appointments";
+import { useAppointment } from "./hooks/useAppointment";
 
 
 
 const PartnerDashboard = () => {
     const { data } = useQuery(['get_Partner_details'], getPartnerDetails)
+    const {
+        totalAppointments
+    } = useAppointment();
     return (
         <div>
             <div className="mb-8">
@@ -12,7 +17,7 @@ const PartnerDashboard = () => {
                     Welcome back, {data?.data?.name || 'Partner'}!
                 </h1>
                 <div className="mt-2 space-y-1">
-               
+
                 </div>
             </div>
 
@@ -35,7 +40,7 @@ const PartnerDashboard = () => {
                                     </dt>
                                     <dd className="flex items-baseline">
                                         <div className="text-2xl font-semibold text-gray-900">
-                                            0
+                                            {totalAppointments}
                                         </div>
                                     </dd>
                                 </dl>
@@ -61,7 +66,7 @@ const PartnerDashboard = () => {
                                     </dt>
                                     <dd className="flex items-baseline">
                                         <div className="text-2xl font-semibold text-gray-900">
-                                            0
+                                            {totalAppointments}
                                         </div>
                                     </dd>
                                 </dl>
@@ -69,7 +74,7 @@ const PartnerDashboard = () => {
                         </div>
                     </div>
                 </div>
-
+{/* 
                 <div className="bg-white overflow-hidden shadow rounded-lg">
                     <div className="p-5">
                         <div className="flex items-center">
@@ -94,34 +99,9 @@ const PartnerDashboard = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                    <div className="p-5">
-                        <div className="flex items-center">
-                            <div className="flex-shrink-0">
-                                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div className="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt className="text-sm font-medium text-gray-500 truncate">
-                                        Monthly Revenue
-                                    </dt>
-                                    <dd className="flex items-baseline">
-                                        <div className="text-2xl font-semibold text-gray-900">
-                                            ₦5000
-                                        </div>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> */}
             </div>
+            <PartnerAppointments />
         </div>
     );
 };

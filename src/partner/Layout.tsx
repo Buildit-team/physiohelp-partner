@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import PartnerSidebar from './components/Sidebar';
+import { AppointmentProvider } from './hooks/useAppointment';
 
 const PartnerLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -42,7 +43,9 @@ const PartnerLayout = () => {
 
                 <main className="flex-1 py-6">
                     <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
-                        <Outlet />
+                        <AppointmentProvider>
+                            <Outlet />
+                        </AppointmentProvider>
                     </div>
                 </main>
             </div>

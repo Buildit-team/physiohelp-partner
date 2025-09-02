@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
         element: <PartnerLogin />
     },
     {
-        path: 'reset-password',
+        path: 'setup-password',
         element: <ResetPassword />
     },
     {
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
             {
                 path: 'patients',
                 element: <PartnerPatients />
-            }
+            },
         ]
     }
 ])

@@ -1,15 +1,19 @@
+import { useQuery } from "react-query";
+import { getPartnerDetails } from "./services/api-service";
 
 
 
 const PartnerDashboard = () => {
-
+    const { data } = useQuery(['get_Partner_details'], getPartnerDetails)
     return (
         <div>
-            <div className="mb-6">
+            <div className="mb-8">
                 <h1 className="text-2xl font-semibold text-gray-900">
-                    Welcome back, Partner!
+                    Welcome back, {data?.data?.name || 'Partner'}!
                 </h1>
-                <p className="text-gray-600">Here's an overview of your practice today.</p>
+                <div className="mt-2 space-y-1">
+               
+                </div>
             </div>
 
 

@@ -23,8 +23,8 @@ const navigate = useNavigate()
             {
                 onSuccess: (data) => {
                     setLoading(false);
-                    localStorage.setItem('partner_token', data.token);
-                    localStorage.setItem('partner_id', data.partner.id);
+                    localStorage.setItem('partner_token', data?.data.token);
+                    localStorage.setItem('partner_id', data.data.partner_id);
                     navigate('/partners')
                 },
                 onError: (error: unknown) => {

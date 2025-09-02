@@ -1,5 +1,5 @@
 import { RxDashboard } from "react-icons/rx";
-import { Calendar, Users, Settings, LogOut, Plus } from "lucide-react";
+import { Calendar,  LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 
@@ -7,8 +7,8 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem('partner_token');
-        navigate("/partners/login");
+        localStorage.clear();
+        navigate("/");
         onClose();
     };
 
@@ -46,7 +46,7 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
                         <Calendar size={16} />
                         <p>Appointments</p>
                     </span>
-                    <span
+                    {/* <span
                         className="w-[80%] h-[60px] cursor-pointer flex gap-[10px] items-center text-white hover:bg-white/10 rounded-lg px-4"
                         onClick={() => {
                             navigate("/partners/create-appointment")
@@ -55,8 +55,8 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
                     >
                         <Plus size={16} />
                         <p>Create Appointment</p>
-                    </span>
-                    <span
+                    </span> */}
+                    {/* <span
                         className="w-[80%] h-[60px] cursor-pointer flex gap-[10px] items-center text-white hover:bg-white/10 rounded-lg px-4"
                         onClick={() => {
                             navigate("/partners/patients")
@@ -65,8 +65,8 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
                     >
                         <Users size={16} />
                         <p>Patients</p>
-                    </span>
-                    <span
+                    </span> */}
+                    {/* <span
                         className="w-[80%] h-[60px] cursor-pointer flex gap-[10px] items-center text-white hover:bg-white/10 rounded-lg px-4"
                         onClick={() => {
                             navigate("/partners/settings")
@@ -75,7 +75,7 @@ const PartnerSidebar = ({ onClose }: { onClose: () => void }) => {
                     >
                         <Settings size={16} />
                         <p>Settings</p>
-                    </span>
+                    </span> */}
                     <span
                         className="w-[80%] h-[60px] cursor-pointer flex gap-[10px] items-center text-white hover:bg-white/10 rounded-lg px-4"
                         onClick={handleLogout}

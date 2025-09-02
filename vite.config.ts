@@ -6,15 +6,15 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: true,
-    port: 3000,
+    port: 3002,
     hmr: {
       host: '127.0.0.1.nip.io',
-      port: 3000,
+      port: 3002,
     },
     allowedHosts: ['.nip.io'],
   },
   preview: {
     host: true,
-    port: 3000,
+    port: 3002,
   }
 })

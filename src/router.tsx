@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
         element: <PartnerLogin />
     },
     {
-        path: 'setup-password',
+        path: 'set-password',
         element: <ResetPassword />
     },
     {
